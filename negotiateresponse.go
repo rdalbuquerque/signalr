@@ -1,5 +1,12 @@
 package signalr
 
+import (
+	"strconv"
+	"strings"
+
+	"golang.org/x/exp/slices"
+)
+
 type TransportType string
 
 var TransportWebSockets TransportType = "WebSockets"
@@ -20,8 +27,19 @@ type negotiateResponse struct {
 	ConnectionToken     string               `json:"connectionToken,omitempty"`
 	ConnectionID        string               `json:"connectionId"`
 	NegotiateVersion    int                  `json:"negotiateVersion,omitempty"`
+	ProtocolVersion     string               `json:"protocolVersion,omitempty"`
 	AvailableTransports []availableTransport `json:"availableTransports,omitempty"`
 	TryWebSockets       bool                 `json:"tryWebSockets,omitempty"`
+}
+
+// getConnectionVersion returns the maximum value between NegotiateVersion and ProtocolVersion
+func (nr *negotiateResponse) getConnectionVersion() (int, error) {
+	protocolMajorVersion, err := strconv.Atoi(strings.Split(nr.ProtocolVersion, ".")[0])
+	if err != nil {
+		return 0, err
+	}
+	connver := slices.Max([]int{nr.NegotiateVersion, protocolMajorVersion})
+	return connver, nil
 }
 
 func (nr *negotiateResponse) allowWebSockets() bool {

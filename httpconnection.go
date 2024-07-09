@@ -114,7 +114,11 @@ func NewHTTPConnection(ctx context.Context, address string, options ...func(*htt
 	}
 
 	q := reqURL.Query()
-	switch negotiateResponse.NegotiateVersion {
+	connVersion, err := negotiateResponse.getConnectionVersion()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get connection version: %w", err)
+	}
+	switch connVersion {
 	case 0:
 		q.Set("id", negotiateResponse.ConnectionID)
 	case 1:
