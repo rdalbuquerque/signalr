@@ -136,7 +136,7 @@ func NewHTTPConnection(ctx context.Context, address string, options ...func(*htt
 		// TODO think about if the API should give the possibility to cancel this connections
 		conn = newWebTransportsConnection(context.Background(), negotiateResponse.ConnectionID, wtConn)
 
-	case httpConn.hasTransport(TransportWebSockets) && negotiateResponse.hasTransport(TransportWebSockets):
+	case (httpConn.hasTransport(TransportWebSockets) && negotiateResponse.hasTransport(TransportWebSockets)) || (httpConn.hasTransport(TransportWebSockets) && negotiateResponse.allowWebSockets()):
 		wsURL := reqURL
 
 		// switch to wss for secure connection

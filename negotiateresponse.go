@@ -20,7 +20,12 @@ type negotiateResponse struct {
 	ConnectionToken     string               `json:"connectionToken,omitempty"`
 	ConnectionID        string               `json:"connectionId"`
 	NegotiateVersion    int                  `json:"negotiateVersion,omitempty"`
-	AvailableTransports []availableTransport `json:"availableTransports"`
+	AvailableTransports []availableTransport `json:"availableTransports,omitempty"`
+	TryWebSockets       bool                 `json:"tryWebSockets,omitempty"`
+}
+
+func (nr *negotiateResponse) allowWebSockets() bool {
+	return nr.TryWebSockets
 }
 
 func (nr *negotiateResponse) hasTransport(transportType TransportType) bool {

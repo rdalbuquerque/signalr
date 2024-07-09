@@ -1,3 +1,8 @@
+# This is a fork
+This is a forked repo to experiment with Azure Devops signalr. 
+
+for the original repo, refer to [philippseith/signalr](https://github.com/philippseith/signalr)
+
 # SignalR
 
 [![Actions Status](https://github.com/philippseith/signalr/workflows/Build%20and%20Test/badge.svg)](https://github.com/philippseith/signalr/actions)
