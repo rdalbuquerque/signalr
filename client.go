@@ -581,7 +581,7 @@ func (c *client) processHandshake() (hubProtocol, error) {
 func (c *client) sendHandshakeRequest() error {
 	info, dbg := c.prefixLoggers(c.conn.ConnectionID())
 	request := fmt.Sprintf("{\"protocol\":\"%v\",\"version\":1}\u001e", c.format)
-	ctx, cancelWrite := context.WithTimeout(c.context(), c.HandshakeTimeout())
+	ctx, cancelWrite := context.WithTimeout(c.context(), 120*time.Second)
 	defer cancelWrite()
 	_, err := ReadWriteWithContext(ctx,
 		func() (int, error) {
@@ -597,7 +597,7 @@ func (c *client) sendHandshakeRequest() error {
 
 func (c *client) receiveHandshakeResponse() (hubProtocol, error) {
 	info, dbg := c.prefixLoggers(c.conn.ConnectionID())
-	ctx, cancelRead := context.WithTimeout(c.context(), c.HandshakeTimeout())
+	ctx, cancelRead := context.WithTimeout(c.context(), 120*time.Second)
 	defer cancelRead()
 	readJSONFramesChan := make(chan []interface{}, 1)
 	go func() {
