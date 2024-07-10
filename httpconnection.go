@@ -124,6 +124,7 @@ func NewHTTPConnection(ctx context.Context, address string, options ...func(*htt
 		q.Set("id", negotiateResponse.ConnectionID)
 	case 1:
 		q.Set("id", negotiateResponse.ConnectionToken)
+		q.Set("connectionToken", negotiateResponse.ConnectionToken)
 	}
 
 	reqURL.RawQuery = q.Encode()
