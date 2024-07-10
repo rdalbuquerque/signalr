@@ -123,7 +123,7 @@ func NewHTTPConnection(ctx context.Context, address string, options ...func(*htt
 	case 0:
 		q.Set("id", negotiateResponse.ConnectionID)
 	case 1:
-		q.Set("id", negotiateResponse.ConnectionToken)
+		q.Set("id", negotiateResponse.ConnectionID)
 		q.Set("connectionToken", negotiateResponse.ConnectionToken)
 	}
 
