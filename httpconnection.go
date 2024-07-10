@@ -162,6 +162,7 @@ func NewHTTPConnection(ctx context.Context, address string, options ...func(*htt
 			opts.HTTPHeader.Add("Cookie", cookie.String())
 		}
 
+		fmt.Println("wsURL.String():", wsURL.String())
 		ws, _, err := websocket.Dial(ctx, wsURL.String(), opts)
 		if err != nil {
 			return nil, err
