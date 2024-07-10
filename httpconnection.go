@@ -149,6 +149,7 @@ func NewHTTPConnection(ctx context.Context, address string, options ...func(*htt
 
 	case (httpConn.hasTransport(TransportWebSockets) && negotiateResponse.hasTransport(TransportWebSockets)) || (httpConn.hasTransport(TransportWebSockets) && negotiateResponse.allowWebSockets()):
 		wsURL := reqURL
+		wsURL.Query().Set("transport", "webSockets")
 
 		// switch to wss for secure connection
 		if reqURL.Scheme == "https" {
