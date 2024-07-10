@@ -20,4 +20,4 @@ if ($Alpha) {
     standard-version
 }
 
-git push --follow-tags origin main
+git push --follow-tags origin master
