@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/url"
 	"path"
+	"strings"
 
 	"github.com/quic-go/webtransport-go"
 	"nhooyr.io/websocket"
@@ -126,6 +127,11 @@ func NewHTTPConnection(ctx context.Context, address string, options ...func(*htt
 	}
 
 	reqURL.RawQuery = q.Encode()
+
+	reqURLParts := strings.Split(reqURL.Path, "/")
+	if reqURLParts[len(reqURLParts)-1] != "connect" {
+		reqURL.Path = path.Join(reqURL.Path, "connect")
+	}
 
 	// Select the best connection
 	var conn Connection
